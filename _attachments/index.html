@@ -13,10 +13,12 @@
                       + "?" + $("#search_form").serialize();
           $.getJSON(url, 
             function(data) {
-              alert("Found" + data);
+              $("#search_results").html("");
               jQuery.each(data.rows, function(i, row) {
                 $("#search_results").append(
-                  '<a href="/esyslog/'+row.id+'">'+row.id+'</a><br />'
+                  '<a name="'+row.id+'" id="'+row.id+'">' 
+                    + row.fields["default"] + 
+                  '</a><br />'
                 );
               });
             });
@@ -31,12 +33,12 @@
 
     <form id="search_form" 
           method="get" 
-          action="/esyslog/_fti/test/all">
+          action="/esyslog/_fti/epimetheus/logs">
       <input name="q" />
       <input type="submit" />
     </form>
 
-    <div id="search_results">&nbsp;</div>
+    <div id="search_results"></div>
 
   </body>
 </html>
