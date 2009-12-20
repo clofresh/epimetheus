@@ -4,16 +4,14 @@ $(document).ready(function() {
                 + "?" + $("#search_form").serialize();
     $.getJSON(url, 
       function(data) {
-        $("#search_results").html("");
-        jQuery.each(data.rows, function(i, row) {
-          $("#search_results").append(
-            '<a name="'+row.id+'" id="'+row.id+'">' 
-              + row.fields["default"] + 
-            '</a><br />'
-          );
-        });
+        $("#search_results").html(new jsontemplate.Template(
+          ["{.repeated section rows}",
+           "  <div>",
+           "    {fields.default}",
+           "  </div>",
+           "{.end}"].join("\n")
+        ).expand(data));
       });
     return false;
   });
 });
-
