@@ -1,14 +1,42 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Generated CouchApp</title>
+    <title>Epimetheus</title>
     <link rel="stylesheet" href="style/main.css" type="text/css">
+    <script src="/_utils/script/json2.js"></script>
+    <script src="/_utils/script/jquery.js?1.3.1"></script>
+    <script src="/_utils/script/jquery.couch.js?0.9.0"></script>
+    <script>
+      $(document).ready(function() {
+        $("#search_form").bind("submit", function() {
+          var url = $("#search_form")[0].action 
+                      + "?" + $("#search_form").serialize();
+          $.getJSON(url, 
+            function(data) {
+              alert("Found" + data);
+              jQuery.each(data.rows, function(i, row) {
+                $("#search_results").append(
+                  '<a href="/esyslog/'+row.id+'">'+row.id+'</a><br />'
+                );
+              });
+            });
+          return false;
+        });
+      })
+    </script>
   </head>
   <body>
-    <h1>Generated CouchApp</h1>
-    <p>This is a placeholder page</p>
+    <h1>Epimetheus</h1>
+    <p>Search your logs with 20/20 hindsight</p>
+
+    <form id="search_form" 
+          method="get" 
+          action="/esyslog/_fti/test/all">
+      <input name="q" />
+      <input type="submit" />
+    </form>
+
+    <div id="search_results">&nbsp;</div>
+
   </body>
-  <script src="/_utils/script/json2.js"></script>
-  <script src="/_utils/script/jquery.js?1.3.1"></script>
-  <script src="/_utils/script/jquery.couch.js?0.9.0"></script>
 </html>
