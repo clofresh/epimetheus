@@ -7,7 +7,7 @@ $(document).ready(function() {
         $("#search_results").html(new jsontemplate.Template(
           ["{.repeated section rows}",
            "  <div>",
-           "    {fields.default}",
+           "    {fields.timestamp} - {fields.default}",
            "  </div>",
            "{.end}"].join("\n")
         ).expand(data));
